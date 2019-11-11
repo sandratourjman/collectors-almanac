@@ -19,7 +19,7 @@
   "homepage": "https://github.com/sandratourjman/collectors-almanac#readme",
   "devDependencies": {
     "faker": "^4.1.0",
-    "jasmine": "^3.5.0",
+    "jasmine": "^3.0.0",
     "nodemon": "^1.19.4",
     "request": "^2.83.0"
   },
