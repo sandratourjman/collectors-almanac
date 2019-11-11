@@ -1,0 +1,44 @@
+{
+  "name": "collectors-almanac",
+  "version": "1.0.0",
+  "description": "An application for collectors to create and share collections",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "export NODE_env=test&& jasmine",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandratourjman/collectors-almanac.git"
+  },
+  "author": "Sandra Tourjman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandratourjman/collectors-almanac/issues"
+  },
+  "homepage": "https://github.com/sandratourjman/collectors-almanac#readme",
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "jasmine": "^3.5.0",
+    "nodemon": "^1.19.4",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.2",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.44.3",
+    "sequelize-cli": "^5.5.1"
+  }
+}
