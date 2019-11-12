@@ -14,14 +14,14 @@ module.exports = {
       password: hashedPassword
     })
     .then((user) => {
-      const msg = {
-        to: user.email,
-        from: 'noreply@blocipedia.com',
-        subject: 'Welcome to Blocipedia!',
-        text: 'You are now part of our wiki community!',
-        html: `<strong>Welcome, ${user.username}</strong>`,
-      };
-      sgMail.send(msg);
+      // const msg = {
+      //   to: user.email,
+      //   from: 'noreply@collectorsalmanac.com',
+      //   subject: 'Welcome to Collector\'s Almanac!',
+      //   text: 'You are now part of our collector\'s community community!',
+      //   html: `<strong>Welcome, ${user.username}</strong>`,
+      // };
+      // sgMail.send(msg);
       callback(null, user);
     })
     .catch((err) => {
@@ -30,4 +30,4 @@ module.exports = {
     })
   },
 
-}
+} 
