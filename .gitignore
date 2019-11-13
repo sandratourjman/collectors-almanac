@@ -2,4 +2,3 @@
 sendgrid.env
 +.env
 
-.env
