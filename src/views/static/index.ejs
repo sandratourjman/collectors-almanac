@@ -13,33 +13,38 @@
 
         <!-- Page Features -->
       <div class="jumbotron jmboCustom">
+      <% if(!currentUser) { %>
+        <section class="row text-center">
+            <section class="col-lg-7">
+              <img src="../logo.png" width="450px" height="270px" alt="Collector's Almanac">
+            </section>
 
-      <section class="row text-center">
+            <section class="col-lg-5">
+              <form class="signInForm" >
+                <div class="form-group">
+                  <p>A collector’s one stop shop  for keeping track of their collections</p>
+                  <p>Upgrade your account to create private collections</p>
+                </div>
 
-          <section class="col-lg-7">
-            <img src="../logo.png" width="450px" height="270px" alt="Collector's Almanac">
+                <div class="form-group">
+                  <a href="/users/sign_in" class="btn btn-primary btn-block">Login to account</a>
+                </div>
+
+                <div class="form-group">
+                  <a href="/users/sign_up" class="btn btn-success btn-block">Create a new account</a>
+                </div>
+              </form>
+            </section>
+          </section>
+        <% } else { %>
+          <h4><%= currentUser.username %>'s Dashboard</h4>
+          <hr>
+          <section class="row text-center">
+            Main screen - more content to come here
           </section>
 
-          <section class="col-lg-5">
-            <form class="signInForm" >
-              <div class="form-group">
-                <p>A collector’s one stop shop  for keeping track of their collections</p>
-                <p>Upgrade your account to create private collections</p>
-              </div>
-
-              <div class="form-group">
-                <a href="/users/sign_in" class="btn btn-primary btn-block">Login to account</a>
-              </div>
-
-              <div class="form-group">
-                <a href="/users/sign_up" class="btn btn-success btn-block">Create a new account</a>
-              </div>
-            </form>
-          </section>
-
-        </section>
-        <!-- /.row -->
-      </div>
+        <% }%>
+      </div> <!-- /.jumbotron -->
       </main>
       <!-- /.container -->
 
