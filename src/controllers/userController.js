@@ -10,45 +10,44 @@ module.exports = {
     
      let newUser = {
        username: req.body.username,
-       email: req.body.email,
+       email: req.body.email.toLowerCase(),
        password: req.body.password,
        passwordConfirmation: req.body.passwordConfirmation
      };
      userQueries.createUser(newUser, (err, user) => {
        if(err){
-         // req.flash("error", err);
-         req.flash("error", err.errors[0].message);
+         req.flash("error", err.errors[0].message || err);
          res.redirect("/users/sign_up");
        } else {
          passport.authenticate("local")(req, res, () => {
-           req.flash("notice", "You've successfully signed up. Welcome!");
+           req.flash("notice", `You've successfully signed up. Welcome ${req.user.name}!`);
            res.redirect("/");
          })
        }
      });
    },
    
-   // signInForm(req, res, next){
-   //   res.render("users/sign_in");
-   // },
+   signInForm(req, res, next){
+     res.render("users/sign_in");
+   },
    
-   // signIn(req, res, next){
-   //   passport.authenticate("local")(req, res, function () {
-   //     if(!req.user){
-   //       req.flash("notice", "Sign in failed. Please try again.")
-   //       res.redirect("/users/sign_in");
-   //     } else {
-   //       req.flash("notice", "You've successfully signed in!");
-   //       res.redirect("/");
-   //     }
-   //   })
-   // },
+   signIn(req, res, next){
+     passport.authenticate("local")(req, res, function () {
+       if(!req.user){
+         req.flash("notice", "Sign in failed. Please try again.")
+         res.redirect("/users/sign_in");
+       } else {
+         req.flash("notice", `Welcome back, ${req.user.username}!`);
+         res.redirect("/");
+       }
+     })
+   },
 
-   // signOut(req, res, next){
-   //   req.logout();
-   //   req.flash("notice", "You've successfully signed out!");
-   //   res.redirect("/");
-   // },
+   signOut(req, res, next){
+     req.logout();
+     req.flash("notice", "You've successfully signed out!");
+     res.redirect("/");
+   },
 
    // show(req, res, next){
    //  userQueries.getUser(req.params.id, (err, result) => {

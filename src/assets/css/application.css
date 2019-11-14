@@ -2,11 +2,14 @@ body {
   padding-top: 54px;
 }
 
+.row, .headings {
+	margin-top: 10px;
+}
+
 .main-page {
 	height: 100vh;
   	min-height: 500px;
 	background: url("../background.jpg");
-	/*background: url("https://www.dropbox.com/s/rgsvmd1scxfxutf/background.jpg?dl=0");*/
 	background-color: rgb(236,233,228);
 	background-size: cover;
 	background-position: center;
