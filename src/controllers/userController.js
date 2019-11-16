@@ -10,7 +10,7 @@ module.exports = {
     
      let newUser = {
        username: req.body.username,
-       email: req.body.email,
+       email: req.body.email.toLowerCase(),
        password: req.body.password,
        passwordConfirmation: req.body.passwordConfirmation
      };
