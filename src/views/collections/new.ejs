@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body class="main-page">
+  
+      <!-- Navigation -->
+     <% include ../static/partials/navbar.ejs %>
+      <!-- Page Content -->
+      <main class="container">
+        <% include ../static/partials/messages.ejs %>
+        
+        <div class="row justify-content-md-center">
+           <div class="col-md-11">
+             <h4>New Collection</h4>
+
+            <form action="/collections/create" method="post">
+              <div class="form-group">
+                <label for="title">Collection title</label>
+                <input type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter title">
+                <small class="text-muted" id="titleHelp">Title must be 2 or more characters in length.</small>
+              </div>
+              <div class="form-group">
+                <label for="category">Collection category</label>
+                <input type="text" class="form-control" name="category" aria-describedby="categoryHelp"placeholder="Enter category">
+                <small class="text-muted" id="categroyHelp">Category must be 2 or more characters in length.</small>
+              </div>
+              <% if(currentUser && (currentUser.role === "premium" || currentUser.role === 'admin')){ %>
+                <div class="form-group">
+                  <label for="private">Collection Status</label>
+                  <select class="form-control" name="private">
+                      <option value="false">Public</option>
+                      <option value="true">Private</option>
+                  </select>
+              </div>
+              <% } %>
+              <div class="row"></div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a href="/collections" type="button" class="btn btn-secondary">Cancel</a>
+            </form>
+
+
+           </div>
+         </div>
+     </main>
+      <!-- /.container -->
+
+       <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body class="main-page">
+  
+      <!-- Navigation -->
+     <% include ../static/partials/navbar.ejs %>
+      <!-- Page Content -->
+      <main class="container">
+        <% include ../static/partials/messages.ejs %>
+
+      <div class="row"></div>
+       <div class="row justify-content-md-center">
+         <div class="col-md-11">
+           <a href="/collections" class="btn btn-primary btn-sm">Back</a>
+           <% if(currentUser) { %>
+             <a href="/collections/<%= collection.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+             <% if (currentUser.role === 'admin' || collection.userId === currentUser.id){ %>
+            <form style="display:initial" action="/collections/<%= collection.id %>/destroy" method="post">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+            <% }%>
+          <% }%>
+         </div>
+       </div>
+        
+        <div class="row justify-content-md-center">
+        <div class="col-md-11">
+          <h4><%= collection.title %></h4>
+          <small><p>Category: <%- collection.category %></p></small>
+        </div>
+
+        <div class="col-md-11">
+          
+        </div>
+      </div>
+
+
+
+        </div><!-- row -->
+     </main>
+      <!-- /.container -->
+
+       <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>
