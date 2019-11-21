@@ -17,5 +17,24 @@ module.exports = {
      }
   },
 
+  validateCollections(req, res, next) {
+    if(req.method === "POST") {
+       req.checkBody("title", "must be at least 2 characters in length").isLength({min:2});
+       req.checkBody("category", "must be at least 2 characters in length").isLength({min:2});
+     }
+
+     const errors = req.validationErrors();
+
+     if (errors) {
+       req.flash("error", errors);
+       return res.redirect(req.headers.referer);
+     } else {
+       return next();
+     }
+
+  },
+
+  
+
 
 }

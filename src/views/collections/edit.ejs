@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body class="main-page">
+  
+      <!-- Navigation -->
+     <% include ../static/partials/navbar.ejs %>
+      <!-- Page Content -->
+      <main class="container">
+        <% include ../static/partials/messages.ejs %>
+        
+        <div class="row "></div>
+         <div class="row justify-content-md-center">
+           <div class="col-md-11">
+             <h4>Edit Collection</h4>
+
+            <form action="/collections/<%= collection.id %>/update" method="post">
+              <div class="form-group">
+                <label for="title">Collection title</label>
+                <input value="<%= collection.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter title">
+                <small class="text-muted" id="titleHelp">Title must be 2 or more characters in length.</small>        
+              </div>
+              <div class="form-group">
+                <label for="category">Collection category</label>
+                <input value="<%= collection.category %>" type="text" class="form-control" name="category" aria-describedby="categoryHelp"placeholder="Enter category">
+                <small class="text-muted" id="categroyHelp">Category must be 2 or more characters in length.</small>
+              </div>
+              <% if(currentUser && (currentUser.role === "premium" || currentUser.role === 'admin') && collection.userId === currentUser.id) { %>
+                <div class="form-group">
+                <label for="private">Collection Status</label>
+
+                <% if(collection.private == true ) { %>
+                  <div class="form-group row">
+                    <small><p class="col-sm-12">Currently Private?: <span class="text-success">Yes</span></p></small>
+                  </div>
+                <% } else { %>
+                  <div class="form-group row">
+                    <small><p class="col-sm-12">Currently Private?: <span class="text-danger">No</span></p></small>
+                  </div>
+                <% }%>
+                <select class="form-control" name="private">
+                    <option value="false">Public</option>
+                    <% if(collection.private == true ) { %>
+                      <option value="true" selected="selected">Private</option>
+                    <% } else { %>
+                      <option value="true">Private</option>
+                    <% }%>
+                </select>
+                <div class="form-group"></div>
+                <div class="form-group">
+                  <a href="/collections/<%= collection.id %>/collaborators" class="btn btn-warning btn-sm">Edit Collaborators</a>
+                </div>
+
+            </div>
+              <% } %>
+              <div class="row"></div>
+              <button type="submit" class="btn btn-primary">Update</button>
+              <a href="/collections/<%= collection.id %>/" type="button" class="btn btn-secondary">Cancel</a>
+            </form>
+           </div>
+         </div>
+     </main>
+      <!-- /.container -->
+
+       <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>
