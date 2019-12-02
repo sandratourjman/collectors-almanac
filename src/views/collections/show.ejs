@@ -20,24 +20,51 @@
              <% if (currentUser.role === 'admin' || collection.userId === currentUser.id){ %>
             <form style="display:initial" action="/collections/<%= collection.id %>/destroy" method="post">
               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              <a href="/collections/<%= collection.id %>/items/new" class="btn btn-success btn-sm">New Item</a>
             </form>
             <% }%>
           <% }%>
          </div>
        </div>
         
-        <div class="row justify-content-md-center">
+      <div class="row justify-content-md-center">
         <div class="col-md-11">
           <h4><%= collection.title %></h4>
-          <small><p>Category: <%- collection.category %></p></small>
+          <small><p class="uppercase">Category: <%- collection.category %></p></small>
         </div>
 
         <div class="col-md-11">
+          <% if(items != "") { %>
+          <table id="">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Price</th>
+                      
+                      <th scope="col">Owned</th>
+                    </tr>
+                  <thead>
+                  <tbody>
+
+                      <% items.forEach((item) => {  %>
+                      <tr>
+
+                        <td><a href="/collections/<%= collection.id %>/items/<%= item.id %>"><%= item.name %></a></td>
+                        <td><%= item.description %></td>
+                        <td>$ <%= item.price.toFixed(2) %></td>
+                        
+                        <td><%= item.owned %></td>
+                        
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+        <% } %>
           
+
         </div>
       </div>
-
-
 
         </div><!-- row -->
      </main>

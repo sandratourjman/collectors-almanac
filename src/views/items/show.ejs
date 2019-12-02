@@ -10,12 +10,55 @@
       <!-- Page Content -->
       <main class="container">
         <% include ../static/partials/messages.ejs %>
+
+      <div class="row"></div>
+       <div class="row justify-content-md-center">
+         <div class="col-md-11">
+           <a href="/collections/<%= item.collectionId %>" class="btn btn-primary btn-sm">Back</a>
+           <% if(currentUser) { %>
+             <a href="/collections/<%= item.collectionId %>/items/<%= item.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+             <form style="display:initial" action="/collections/<%= item.collectionId %>/items/<%= item.id %>/destroy" method="post">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>  
+          <% }%>
+         </div>
+       </div>
         
-        <div class="row">
+      <div class="row justify-content-md-center">
+        <div class="col-md-11">
+          <div>
+            <h5>Item Name: </h5>
+            <p><%= item.name %></p>
+          </div>
+
+          <div>
+            <h5>Item Description: </h5>
+            <p><%= item.description %></p>
+          </div>
+
+          <div>
+            <h5>Item Price: </h5>
+            <p><%= item.price %></p>
+          </div>
+
+          <div>
+            <h5>Item Link: </h5>
+            <p><a href="<%= item.link %>" target="_blank"><%= item.link %></a></p>
+          </div>
+
+          <div>
+            <h5>Wishlist or Collection</h5>
+            <% if(item.owned == false) { %>
+              <p> Wishlist Item</p>
+            <% } else { %>
+              <p>In Collection</p>
+            <% } %>
+          </div>          
+          
+        </div>
 
 
-
-        </div><!-- row -->
+      </div>
      </main>
       <!-- /.container -->
 

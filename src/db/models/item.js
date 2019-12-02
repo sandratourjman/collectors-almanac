@@ -13,7 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT
     },
     link: {
+      allowNull: false,
+      defaultValue: false,
       type: DataTypes.STRING
+    },
+    owned: {
+      allowNull: false,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN
     },
     collectionId: {
       type: DataTypes.INTEGER,
@@ -25,6 +32,17 @@ module.exports = (sequelize, DataTypes) => {
     Item.belongsTo(models.Collection, {
       foreignKey: 'collectionId',
       onDelete: "CASCADE"
+    });
+
+    Item.addScope('itemsFor', (collectionId) => {
+       return {
+         include: [{
+           model: models.Collection,
+           as: "Collection"
+         }],
+         where: { collectionId: collectionId },
+         order: [['createdAt', 'ASC']]
+       }
     });
   };
   return Item;
