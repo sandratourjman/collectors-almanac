@@ -11,11 +11,55 @@
       <main class="container">
         <% include ../static/partials/messages.ejs %>
         
-        <div class="row">
+        <div class="row justify-content-md-center">
+           <div class="col-md-11">
+             <h4>New Item</h4>
 
+            <form action="/collections/<%= collection.id %>/items/create" method="post">
+              <div class="form-group">
+                <label for="name">Item name</label>
+                <input type="text" class="form-control" name="name" aria-describedby="nameHelp" placeholder="Enter name">
+                <small class="text-muted" id="nameHelp">Name must be 2 or more characters in length.</small>
+              </div>
 
+              <div class="form-group">
+                <label for="category">Item description</label>
+                <textarea rows="3" class="form-control" name="description" aria-describedby="descriptionHelp" placeholder="Enter description"></textarea>
+              </div>
 
-        </div><!-- row -->
+              <div class="form-group">
+                <label for="price">Item price</label>
+                <input type="text" class="form-control" name="price" aria-describedby="priceHelp"placeholder="Enter price of item">
+                <small class="text-muted" id="priceHelp">Price is in USD.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="link">Item link</label>
+                <input type="text" class="form-control" name="link" aria-describedby="linkHelp"placeholder="Enter link for item">
+              </div>
+
+              <div class="form-group" name="owned">
+                <div class="btn btn-sm button-unselected form-check form-check-inline">
+                  <input id="wishlist" name="owned" type="radio" class="with-font" value="false" />
+                  <label for="wishlist">Add to Wishlist</label>
+                </div>
+                <div class="btn btn-sm button-unselected form-check form-check-inline">
+                  <input id="collection" name="owned" type="radio" class="with-font" value="true"/>
+                  <label for="collection">Add to Collection</label>
+                </div>
+              </div>
+              <small class="text-muted" id="collectionelp">Item must be added to Wishlist or Collection.</small>
+
+              <div class="row"></div>
+
+               <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/collections/<%= collection.id %>" type="button" class="btn btn-secondary">Cancel</a>
+              </div>
+
+            </form>
+           </div>
+        </div>
      </main>
       <!-- /.container -->
 

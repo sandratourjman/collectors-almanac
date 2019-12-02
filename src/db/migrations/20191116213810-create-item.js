@@ -22,8 +22,14 @@ module.exports = {
       link: {
         type: Sequelize.STRING
       },
+      owned: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       collectionId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         allowNull: false,
         references: {
           model: "Collections",

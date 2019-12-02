@@ -1,4 +1,5 @@
 const Item = require("./models").Item;
+const Collection = require("./models").Collection;
 
 module.exports = {
 
@@ -14,9 +15,15 @@ module.exports = {
 	},
 
 	getItem(id, callback) {
+		let result = {};
 		return Item.findByPk(id)
 		.then((item) => {
-			callback(null, item)
+			if(!item){
+				callback(400);
+			} else {
+				result['item'] = item;
+				callback(null, result);
+			}
 		})
 		.catch((err) => {
 			callback(err);

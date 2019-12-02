@@ -1,5 +1,10 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css);
 body {
   padding-top: 54px;
+}
+
+[type='radio'] {
+display: none; 
 }
 
 .row, .headings {
@@ -38,7 +43,12 @@ body {
 	display: inline-block;
 	float:left;
 }
-/* Wiki Table */
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+/* Collection Table */
 #collectionTable {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -47,11 +57,85 @@ body {
 
 #collectionTable td, 
 #collectionTable th,  {
-  /*border: 1px solid #ddd;*/
   padding: 8px;
 }
-
 
 #collectionTable tr:nth-child(even){background-color: #f2f2f2;}
 #collectionTable tr:hover {background-color: #ddd;}
 
+/* Item Table */
+#itemTable {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#itemTable td, 
+#itemTable th,  {
+  padding: 8px;
+}
+
+#itemTable tr:nth-child(even){background-color: #f2f2f2;}
+#itemTable tr:hover {background-color: #ddd;}
+
+/* button - wishlist and collection */
+.button-unselected{
+  color: #fff;
+  background-color: #0079c4;
+}
+
+input[type=radio].with-font {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+/*   heart   */
+ input[type=radio]#wishlist.with-font ~ label:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f004";
+    letter-spacing: 10px;
+    font-size: 1.2em;
+    color: white;
+    width: 1.4em;
+}
+
+ input[type=radio]#wishlist.with-font:checked ~ label:before  {
+    content: "\f004";
+    font-size: 1.2em;
+    color: blue;
+    letter-spacing: 5px;
+}
+
+ input[type=radio]#wishlist.with-font:focus ~ label:before,
+ input[type=radio]#wishlist.with-font:focus ~ label {                
+    color: blue;
+}
+
+/* trophy */
+input[type=radio]#collection.with-font ~ label:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f091";
+    letter-spacing: 10px;
+    font-size: 1.2em;
+    color: white;
+    width: 1.4em;
+}
+
+input[type=radio]#collection.with-font:checked ~ label:before  {
+    content: "\f091";
+    font-size: 1.2em;
+    color: blue;
+    letter-spacing: 5px;
+}
+
+input[type=radio]#collection.with-font:focus ~ label:before,
+input[type=radio]#collection.with-font:focus ~ label {                
+    color: blue;
+}

@@ -1,4 +1,5 @@
 const Collection = require("./models").Collection;
+const Item = require("./models").Item;
 
 module.exports = {
 
@@ -14,9 +15,19 @@ module.exports = {
 	},
 
 	getCollection(id, callback) {
+		let result = {};
 		return Collection.findByPk(id)
 		.then((collection) => {
-			callback(null, collection)
+			if(!collection){
+				callback(400);
+			} else {
+				result['collection'] = collection;
+				Item.scope({method: ['itemsFor', id]}).findAll()
+				.then(items => {
+					result['items'] = items;
+					callback(null, result)
+				})
+			}
 		})
 		.catch((err) => {
 			callback(err);

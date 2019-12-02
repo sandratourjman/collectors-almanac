@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     private: {
     	allowNull: false,
-        defaultValue: false,
+      defaultValue: false,
     	type: DataTypes.BOOLEAN
     },
     userId: {
@@ -31,6 +31,17 @@ module.exports = (sequelize, DataTypes) => {
     	foreignKey: 'collectionId',
     	as: 'items'
     });
+
+    Collection.addScope('collectionFor', (itemId) => {
+       return {
+         include: [{
+           model: models.Item
+         }],
+         where: { itemId: itemId },
+         order: [['createdAt', 'ASC']]
+       }
+    });
+    
   };
   return Collection;
 };

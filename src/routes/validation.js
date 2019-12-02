@@ -34,7 +34,21 @@ module.exports = {
 
   },
 
-  
+  validateItems(req, res, next) {
+    if(req.method === "POST") {
+       req.checkBody("name", "must be at least 1 characters in length").isLength({min:1});
+       req.checkBody("description", "must be at least 10 characters in length").isLength({min:10});
+     }
 
+     const errors = req.validationErrors();
+
+     if (errors) {
+       req.flash("error", errors);
+       return res.redirect(req.headers.referer);
+     } else {
+       return next();
+     }
+
+  },
 
 }

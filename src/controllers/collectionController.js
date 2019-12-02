@@ -31,11 +31,13 @@ module.exports = {
 	    });
     },
     show(req, res, next){
-        collectionQueries.getCollection(req.params.id, (err, collection) => {
+        collectionQueries.getCollection(req.params.id, (err, result) => {
+            collection = result['collection'];
+            items = result['items'];
             if(err || collection == null){
                 res.redirect(404, '/');
             } else {
-                res.render('collections/show', {collection});
+                res.render('collections/show', {collection, items});
             }
         });
     },
@@ -49,7 +51,8 @@ module.exports = {
         });
     },
     edit(req, res, next){
-        collectionQueries.getCollection(req.params.id, (err, collection) => {
+        collectionQueries.getCollection(req.params.id, (err, result) => {
+            collection = result['collection'];
             if(err || collection == null){
                 res.redirect(404, "/");
             } else {
