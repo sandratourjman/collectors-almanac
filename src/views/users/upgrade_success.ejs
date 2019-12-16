@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <div class="row "></div>
+         <div class="row justify-content-md-center">
+           <div class="col-md-11">
+             <h4>Upgrade Successful</h4>
+
+             <p>You are now a preimum member!</p>
+
+             <p>As a premium member, you can create unlimited collections.</p>
+
+
+             <div class="row"></div><div class="row"></div>
+
+             <div class="row">
+              <div class="col-md-11">
+              <a href="/" class="btn btn-outline-dark btn-sm" style="margin-right: 10px">Back to Home</a>
+              <a href="/collections" class="btn btn-outline-dark btn-sm">Back to Collections</a>
+               </div>
+             </div>
+
+           </div>
+         </div>
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

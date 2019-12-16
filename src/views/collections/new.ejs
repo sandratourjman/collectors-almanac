@@ -26,7 +26,7 @@
                 <input type="text" class="form-control" name="category" aria-describedby="categoryHelp"placeholder="Enter category">
                 <small class="text-muted" id="categroyHelp">Category must be 2 or more characters in length.</small>
               </div>
-              <% if(currentUser && (currentUser.role === "premium" || currentUser.role === 'admin')){ %>
+<!--               <% if(currentUser && (currentUser.role === "premium" || currentUser.role === 'admin')){ %>
                 <div class="form-group">
                   <label for="private">Collection Status</label>
                   <select class="form-control" name="private">
@@ -34,7 +34,7 @@
                       <option value="true">Private</option>
                   </select>
               </div>
-              <% } %>
+              <% } %> -->
               <div class="row"></div>
               <button type="submit" class="btn btn-primary">Submit</button>
               <a href="/collections" type="button" class="btn btn-secondary">Cancel</a>
