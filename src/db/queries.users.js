@@ -30,4 +30,48 @@ module.exports = {
     })
   },
 
+    getUser(id, callback){
+    let result = {};
+    User.findByPk(id)
+    .then((user) => {
+      if(!user) {
+          callback(404);
+        } else {
+          result["user"] = user;
+          callback(null, result);
+      }
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+
+  upgradeUser(id, callback) {
+    return User.findByPk(id)
+    .then((user) => {
+      if(!user){
+        return callback(404);
+      } else {
+        return user.updateAttributes({ role: "premium"})
+      }
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+
+  downgradeUser(id, callback) {
+    return User.findByPk(id)
+    .then((user) => {
+      if(!user){
+        return callback(404);
+      } else {
+        return user.updateAttributes({ role: "standard"})
+      }
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  }
+
 } 

@@ -15,7 +15,13 @@
         <div class="row justify-content-md-center align-middle" >
            <div class="col-md-11">
              <h4 style="display: inline-block; margin-right:10px">My Collections</h4>
-              <a href="/collections/new" class="btn btn-success btn-sm">New Collection</a>
+             <% const lenCollections = collections.filter(collection => collection.userId === currentUser.id ) %>
+             <% if (currentUser.role == "standard" && lenCollections.length >= 1) { %>
+              <a href="/collections/new" class="btn btn-success btn-sm disabled">New Collection</a><br>
+              <small>Upgrade to premium account to create more collections</small>
+             <% } else { %>
+             <a href="/collections/new" class="btn btn-success btn-sm">New Collection</a>
+            <% } %>
            </div>
        </div>
 
@@ -30,7 +36,7 @@
                 </tr>
               <thead>
               <tbody>
-                <% const allCollections = collections.filter(collection => collection.userId === currentUser.id || collection.private == false) %>
+                <% const allCollections = collections.filter(collection => collection.userId === currentUser.id || currentUser.role == "admin") %>
                 <% allCollections.forEach((collection) => {  %>
                 <tr>
                   <td><a href="/collections/<%= collection.id %>"><%= collection.title %></a></td>

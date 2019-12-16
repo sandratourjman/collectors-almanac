@@ -1,5 +1,10 @@
 const userQueries = require("../db/queries.users.js");
+const collectionQueries = require("../db/queries.collections.js");
+const itemQueries = require("../db/queries.items.js");
 const passport = require("passport");
+const secretKey = process.env.STRIPE_SECRET_KEY;
+const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+const stripe = require("stripe")(secretKey);
 
 module.exports = {
   signUp(req, res, next){
@@ -7,7 +12,6 @@ module.exports = {
   },
 
   create(req, res, next){
-    
      let newUser = {
        username: req.body.username,
        email: req.body.email.toLowerCase(),
@@ -49,15 +53,132 @@ module.exports = {
      res.redirect("/");
    },
 
-   // show(req, res, next){
-   //  userQueries.getUser(req.params.id, (err, result) => {
+   show(req, res, next){
+      res.render("users/show");
+    },
 
-   //    if(err || result.user === undefined){
-   //      req.flash("notice", "No user found with that ID.");
-   //      res.redirect("/");
-   //    } else {
+   upgradeForm(req, res, next) {
+    res.render("users/upgrade", {publishableKey});
+   },
 
-   //      res.render("users/show", {...result});
-   //    }
-   //  });
+   upgrade(req, res, next) {
+    stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken
+    })
+    .then((customer) => {
+      stripe.charges.create({
+        amount: 1500,
+        currency: "usd",
+        customer: customer.id,
+        description: "Premium membership"
+      })
+    })
+    .then((charge) => {
+      userQueries.upgradeUser(req.user.dataValues.id);
+      res.render("users/upgrade_success");
+    })
+
+   },
+
+   createMergeCollection(req, res, next){
+    let mergeCollection = {
+      title: 'Merged Collections',
+      category: 'CATEGORY 1',
+      private: req.body.private,
+      userId: req.user.id
+    };
+    let collectionID;
+
+    collectionQueries.addCollection(mergeCollection, (err, collection) => {
+          if(err){
+              console.log(err);
+          } else {
+              // console.log("collection created");
+              collectionID = collection.dataValues.id;
+              return collectionID;
+          }
+      });
+
+    setTimeout(()=> {
+      collectionQueries.getCollection(collectionID, (err, result) => {
+            collection = result['collection'];
+
+            if(err || collection == null){
+                console.log(err);
+            } else {
+                // console.log("mergeCollection");
+                // console.log(collection);
+            }
+        });
+    }, 1000);
+
+    setTimeout(()=> {
+      collectionQueries.getAllCollections((err, collections) => {
+        if(err){
+          console.log(err);
+        } else {
+          collections.forEach(collection => {
+
+            collectionQueries.getCollection(collection.id, (err, result) => {
+              collection = result['collection'];
+              items = result['items'];
+              if(err || collection == null){
+                  console.log(err);
+              } else {
+
+                items.forEach(item => {
+                  if (item){
+                    // set item collection id to merge collection id
+                    item.collectionId = collectionID;
+                    itemQueries.updateItem(item.id, item.dataValues, (err, item) => {
+                      if(err || item == null){
+                          console.log(err);
+                      } else {
+                          // items moved to merged collection
+                          // delete old collections except merged
+                          // console.log("items moved to merge");
+                      }
+                    });
+
+                  }
+                });
+              }
+            });
+          }); 
+        } // end of else getAllCollections
+      })
+    }, 1500);
+
+    setTimeout(()=> {
+      collectionQueries.getAllCollections((err, collections) => {
+        if(err){
+          console.log(err);
+        } else {
+          // console.log("merged collection ID");
+
+          collections.forEach(collection => {
+            if (collection.id !== collectionID) {
+              collectionQueries.deleteCollection(collection.id, (err, deletedRecordsCount) => {
+                if(err){
+                    console.log(err);
+                } else {
+                    // console.log("collections deleted");
+                }
+              });
+            }
+          }); 
+        }
+      });
+    }, 2000);
+
+  },
+
+   downgrade(req, res, next) {
+    userQueries.downgradeUser(req.user.dataValues.id);
+    module.exports.createMergeCollection(req, res, next);
+    req.flash("notice", "You've successfully downgraded your account.");
+    res.redirect(`/users/${req.user.id}`);
+   }
+
 }
